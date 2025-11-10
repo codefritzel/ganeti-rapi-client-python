@@ -1,0 +1,14 @@
+[
+  {
+    "id": "node1.example.com",
+    "url": "/2/nodes/node1.example.com"
+  },
+  {
+    "id": "node2.example.com",
+    "url": "/2/nodes/node2.example.com"
+  },
+  {
+    "id": "node3.example.com",
+    "url": "/2/nodes/node3.example.com"
+  }
+]

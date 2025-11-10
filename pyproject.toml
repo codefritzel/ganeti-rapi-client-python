@@ -1,0 +1,29 @@
+[project]
+name = "ganeti-rapi-client"
+version = "0.0.1"
+description = "A modern, modular and type-annotated client for the Ganeti Remote API (RAPI)"
+requires-python = ">=3.9"
+dependencies = [
+    "requests"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+    "mypy",
+    "types-requests"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["client"]
+
+[tool.pytest.ini_options]
+pythonpath = '.'
+testpaths = ["tests"]
+addopts = "-vv"

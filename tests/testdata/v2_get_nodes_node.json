@@ -1,0 +1,52 @@
+{
+  "name": "node1.example.com",
+  "offline": false,
+  "master_candidate": true,
+  "drained": false,
+  "dtotal": 201399,
+  "dfree": 191143,
+  "sptotal": 0,
+  "spfree": 0,
+  "mtotal": 128685,
+  "mnode": 25544,
+  "mfree": 103141,
+  "pinst_cnt": 3,
+  "sinst_cnt": 1,
+  "ctotal": 12,
+  "cnos": 12,
+  "cnodes": 1,
+  "csockets": 1,
+  "pip": "192.168.1.200",
+  "sip": "192.168.1.200",
+  "role": "C",
+  "pinst_list": [
+    "instance1.example.com",
+    "instance2.example.com",
+    "instance3.example.com"
+  ],
+  "sinst_list": [
+    "instance4.example.com"
+  ],
+  "master_capable": true,
+  "vm_capable": true,
+  "ndparams": {
+    "oob_program": "",
+    "spindle_count": 1,
+    "exclusive_storage": false,
+    "ovs": false,
+    "ovs_name": "switch1",
+    "ovs_link": "",
+    "ssh_port": 22,
+    "cpu_speed": 1
+  },
+  "group.uuid": "4d3bf3ba-972e-49b0-8680-f783fb07a048",
+  "ctime": 1757502217.0021152,
+  "mtime": 1757502217.0021152,
+  "uuid": "b4b40f51-bd54-4b4c-991a-d2d771324e5d",
+  "serial_no": 10,
+  "tags": [
+    "environment:production",
+    "managed:true"
+  ],
+  "secondary_ip": "192.168.1.200"
+}

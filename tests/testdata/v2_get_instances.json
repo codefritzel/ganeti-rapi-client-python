@@ -1,0 +1,14 @@
+[
+  {
+    "id": "instance1.example.com",
+    "url": "/2/instances/instance1.example.com"
+  },
+  {
+    "id": "instance2.example.com",
+    "url": "/2/instances/instance2.example.com"
+  },
+  {
+    "id": "instance3.example.com",
+    "url": "/2/instances/instance3.example.com"
+  }
+]
