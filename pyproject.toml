@@ -21,7 +21,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["client"]
+include = ["client*"]
 
 [tool.pytest.ini_options]
 pythonpath = '.'
