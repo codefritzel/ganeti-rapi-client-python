@@ -3,10 +3,11 @@ from typing import Any
 
 import requests
 
-from client.api_exeption import (
+from client.exceptions import (
     AuthenticationError,
     AuthorizationError,
     BadRequestError,
+    GanetiRAPIClientError,
     GanetiRAPIError,
     ResourceNotFoundError,
     ServerError,
@@ -16,10 +17,11 @@ from client.api_exeption import (
 class BaseApiClient:
     _ERROR_MAP = {400: BadRequestError, 401: AuthenticationError, 403: AuthorizationError, 404: ResourceNotFoundError}
 
-    def __init__(self, rapi_address: str, username: str, password: str, ssl_verify: bool = True):
+    def __init__(self, rapi_address: str, username: str, password: str, ssl_verify: bool = True, timeout: int = 10):
         self.base_url = f"https://{rapi_address}/2"
         self.username = username
         self.password = password
+        self.timeout = timeout
         self._session = requests.Session()
 
         self._session.auth = (self.username, self.password)
@@ -58,7 +60,10 @@ class BaseApiClient:
         )
 
     def _request(self, method: str, endpoint: str, **kwargs: Any) -> requests.Response:
-        response = self._session.request(method, f"{self.base_url}/{endpoint}", **kwargs)
+        try:
+            response = self._session.request(method, f"{self.base_url}/{endpoint}", **kwargs)
+        except requests.exceptions.RequestException as e:
+            raise GanetiRAPIClientError(f"Client Error: {e}") from e
 
         if not response.ok:
             self._handle_error_response(response, f"{self.base_url}/{endpoint}")

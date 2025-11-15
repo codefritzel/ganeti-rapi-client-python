@@ -1,13 +1,15 @@
 from typing import Any, Callable
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
+import requests
 
 from client.api_client import BaseApiClient
-from client.api_exeption import (
+from client.exceptions import (
     AuthenticationError,
     AuthorizationError,
     BadRequestError,
+    GanetiRAPIClientError,
     ResourceNotFoundError,
     ServerError,
 )
@@ -75,3 +77,10 @@ class TestErrorHandling:
 
         assert exc_info.value.status_code == 502
         assert exc_info.value.message == "Internal Server Error"
+
+    def test_request_timeout_error(self, api_client: BaseApiClient) -> None:
+        with patch.object(api_client._session, "request", side_effect=requests.exceptions.Timeout):
+            with pytest.raises(GanetiRAPIClientError) as exc_info:
+                api_client.get("/dummy")
+
+            assert "Client Error" in str(exc_info.value)

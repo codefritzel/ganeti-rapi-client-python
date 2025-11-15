@@ -26,3 +26,7 @@ class BadRequestError(GanetiRAPIError):
 
 class ServerError(GanetiRAPIError):
     """Raised when the server encounters an error (500+)."""
+
+
+class GanetiRAPIClientError(Exception):
+    """Base exception for Ganeti RAPI client errors."""
