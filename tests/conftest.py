@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from client import GanetiRapiClient
-from client.api_client import BaseApiClient
+from client.api_client import RAPIClient
 
 
 @pytest.fixture
@@ -21,16 +21,16 @@ def mock_session() -> MagicMock:
 
 
 @pytest.fixture
-def api_client(mock_session: MagicMock, monkeypatch: pytest.MonkeyPatch) -> BaseApiClient:
+def api_client(mock_session: MagicMock, monkeypatch: pytest.MonkeyPatch) -> RAPIClient:
     """Create a base api client with mocked session."""
-    client = BaseApiClient("localhost", "username", "password", ssl_verify=False)
+    client = RAPIClient("localhost", "username", "password", ssl_verify=False)
     # Replace the session with our mock
     monkeypatch.setattr(client, "_session", mock_session)
     return client
 
 
 @pytest.fixture
-def ganeti_rapi_client(api_client: BaseApiClient, monkeypatch: pytest.MonkeyPatch) -> GanetiRapiClient:
+def ganeti_rapi_client(api_client: RAPIClient, monkeypatch: pytest.MonkeyPatch) -> GanetiRapiClient:
     """Create a ganeti rapi client with mocked session."""
     client = GanetiRapiClient("localhost", "username", "password", ssl_verify=False)
     # Replace the internal client's session

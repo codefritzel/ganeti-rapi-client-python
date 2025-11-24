@@ -14,7 +14,7 @@ from client.exceptions import (
 )
 
 
-class BaseApiClient:
+class RAPIClient:
     _ERROR_MAP = {400: BadRequestError, 401: AuthenticationError, 403: AuthorizationError, 404: ResourceNotFoundError}
 
     def __init__(self, rapi_address: str, username: str, password: str, ssl_verify: bool = True, timeout: int = 10):
@@ -86,7 +86,7 @@ class BaseApiClient:
         """Close the session and cleanup."""
         self._session.close()
 
-    def __enter__(self) -> "BaseApiClient":
+    def __enter__(self) -> "RAPIClient":
         return self
 
     def __exit__(self, exc_type: BaseException, exc_val: BaseException, exc_tb: types.TracebackType) -> None:

@@ -1,4 +1,4 @@
-from client.api_client import BaseApiClient
+from client.api_client import RAPIClient
 from client.models.node import Node
 from client.utils import dict_to_dataclass
 
@@ -6,7 +6,7 @@ from client.utils import dict_to_dataclass
 class NodeService:
     ENDPOINT = "nodes"
 
-    def __init__(self, api_client: BaseApiClient):
+    def __init__(self, api_client: RAPIClient):
         self.api_client = api_client
 
     def get_node_names(self) -> list[str]:

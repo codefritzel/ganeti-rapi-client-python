@@ -3,13 +3,13 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from client.api_client import BaseApiClient
+from client.api_client import RAPIClient
 from client.models.node import Node
 from client.services.node_service import NodeService
 
 
 @pytest.fixture
-def node_service(api_client: BaseApiClient) -> NodeService:
+def node_service(api_client: RAPIClient) -> NodeService:
     return NodeService(api_client)
 
 
