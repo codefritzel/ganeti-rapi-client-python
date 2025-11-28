@@ -1,5 +1,5 @@
 import typing
-from typing import Any
+from typing import Any, List
 
 from client.api_client import RAPIClient
 from client.models.instance import InstanceInfo, NewInstance
@@ -12,7 +12,7 @@ class InstanceService:
     def __init__(self, api_client: RAPIClient):
         self.api_client = api_client
 
-    def get_instance_names(self) -> list[str]:
+    def get_instance_names(self) -> List[str]:
         instances = self.api_client.get(self.ENDPOINT)
         return [instance["id"] for instance in instances]
 

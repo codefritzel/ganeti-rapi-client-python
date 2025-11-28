@@ -4,12 +4,14 @@ version = "0.0.1"
 description = "A modern, modular and type-annotated client for the Ganeti Remote API (RAPI)"
 requires-python = ">=3.9"
 dependencies = [
-    "requests"
+    "requests",
+    "httpx"
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest",
+    "pytest-asyncio",
     "ruff",
     "mypy",
     "types-requests"

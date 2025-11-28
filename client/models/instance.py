@@ -56,7 +56,7 @@ class InstanceInfo:
 class NewInstance:
     name: str
     disk_template: str
-    disks: list[dict[str, Any]]
+    disks: list[dict[str, str]]
     nics: list[dict[str, Any]]
     os: str
     osparams: Optional[dict[str, Any]] = None

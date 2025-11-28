@@ -32,7 +32,7 @@ jobs:
         run: ruff format --check .
 
       - name: Run mypy type checking
-        run: mypy . --strict --ignore-missing-imports
+        run: mypy . --strict --ignore-missing-imports --explicit-package-bases
 
       - name: Run pytest
         run: pytest tests/ -v

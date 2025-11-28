@@ -53,6 +53,7 @@ def mock_response() -> Callable[[Any, int], MagicMock]:
         response.status_code = status_code
         response.json.return_value = data or {}
         response.ok = status_code < 400
+        response.is_success = status_code < 400
         return response
 
     return _create_mock_response
