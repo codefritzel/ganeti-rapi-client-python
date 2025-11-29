@@ -1,7 +1,7 @@
 import types
 from typing import Any
 
-import requests
+import httpx
 
 from client.exceptions import (
     AuthenticationError,
@@ -19,17 +19,13 @@ class RAPIClient:
 
     def __init__(self, rapi_address: str, username: str, password: str, ssl_verify: bool = True, timeout: int = 10):
         self.base_url = f"https://{rapi_address}/2"
-        self.username = username
-        self.password = password
         self.timeout = timeout
-        self._session = requests.Session()
+        self._http_client = httpx.Client(base_url=self.base_url, verify=ssl_verify, timeout=timeout)
 
-        self._session.auth = (self.username, self.password)
-        self._session.headers.update({"Content-Type": "application/json", "Accept": "application/json"})
+        self._http_client.auth = httpx.BasicAuth(username, password)
+        self._http_client.headers.update({"Content-Type": "application/json", "Accept": "application/json"})
 
-        self._session.verify = ssl_verify
-
-    def _handle_error_response(self, response: requests.Response, url: str) -> None:
+    def _handle_error_response(self, response: httpx.Response, url: str) -> None:
         """Handle an error response from the API."""
         status_code = response.status_code
         try:
@@ -59,13 +55,13 @@ class RAPIClient:
             url=url,
         )
 
-    def _request(self, method: str, endpoint: str, **kwargs: Any) -> requests.Response:
+    def _request(self, method: str, endpoint: str, **kwargs: Any) -> httpx.Response:
         try:
-            response = self._session.request(method, f"{self.base_url}/{endpoint}", **kwargs)
-        except requests.exceptions.RequestException as e:
+            response = self._http_client.request(method, f"{self.base_url}/{endpoint}", **kwargs)
+        except httpx.RequestError as e:
             raise GanetiRAPIClientError(f"Client Error: {e}") from e
 
-        if not response.ok:
+        if not response.is_success:
             self._handle_error_response(response, f"{self.base_url}/{endpoint}")
 
         return response
@@ -84,7 +80,7 @@ class RAPIClient:
 
     def close(self) -> None:
         """Close the session and cleanup."""
-        self._session.close()
+        self._http_client.close()
 
     def __enter__(self) -> "RAPIClient":
         return self

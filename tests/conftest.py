@@ -10,22 +10,22 @@ from client.api_client import RAPIClient
 
 
 @pytest.fixture
-def mock_session() -> MagicMock:
+def mock_http_client() -> MagicMock:
     """Create a mock session."""
-    session = MagicMock()
-    session.auth = None
-    session.headers = {}
-    session.verify = True
+    http_client = MagicMock()
+    http_client.auth = None
+    http_client.headers = {}
+    http_client.verify = True
 
-    return session
+    return http_client
 
 
 @pytest.fixture
-def api_client(mock_session: MagicMock, monkeypatch: pytest.MonkeyPatch) -> RAPIClient:
+def api_client(mock_http_client: MagicMock, monkeypatch: pytest.MonkeyPatch) -> RAPIClient:
     """Create a base api client with mocked session."""
     client = RAPIClient("localhost", "username", "password", ssl_verify=False)
     # Replace the session with our mock
-    monkeypatch.setattr(client, "_session", mock_session)
+    monkeypatch.setattr(client, "_http_client", mock_http_client)
     return client
 
 

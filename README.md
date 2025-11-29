@@ -8,12 +8,12 @@ This library focuses on a clean architecture with typing for excellent editor su
 - Modern design with a focus on clarity and maintainability
 - fully type-annotated API for first-class IDE autocompletion and static analysis (mypy)
 - Modular architecture to keep concerns separated and extensible
-- Minimal runtime dependencies (only `requests`)
+- Minimal runtime dependencies (only `httpx`)
 
 ## Requirements
 
 - Python 3.9+
-- `requests`
+- `httpx`
 
 ## Installation
 
