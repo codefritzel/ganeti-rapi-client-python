@@ -8,7 +8,7 @@ from client.async_client.services.async_job_service import AsyncJobService
 
 class TestAsyncJobService:
     @pytest.mark.asyncio
-    async def test_get_jobs(
+    async def test_get_job_ids(
         self,
         async_job_service: AsyncJobService,
         mock_client: AsyncMock,
@@ -16,7 +16,7 @@ class TestAsyncJobService:
     ) -> None:
         mock_client.request.return_value = mock_response_from_jsonfile("v2_get_jobs.json")
 
-        jobs = await async_job_service.get_jobs()
+        jobs = await async_job_service.get_job_ids()
 
         assert mock_client.request.call_args[0][0] == "GET"
         assert "jobs" in mock_client.request.call_args[0][1]

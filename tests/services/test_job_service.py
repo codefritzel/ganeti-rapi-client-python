@@ -21,8 +21,8 @@ class TestJobService:
         service = JobService(api_client=MagicMock())
 
         # --- Scenario 1: job transitions from running to success ---
-        pending = Job(id=1, status=JOB_STATUS_RUNNING, ops=[], opstatus=[], opresult=[])
-        success = Job(id=1, status=JOB_STATUS_SUCCESS, ops=[], opstatus=[], opresult=[])
+        pending = Job(id=1, status=JOB_STATUS_RUNNING, ops=[], opstatus=[], opresult=[], summary=["Test"])
+        success = Job(id=1, status=JOB_STATUS_SUCCESS, ops=[], opstatus=[], opresult=[], summary=["Test"])
 
         get_job_info_mock_success = MagicMock(side_effect=[pending, success])
         monkeypatch.setattr(service, "get_job_info", get_job_info_mock_success)
@@ -42,7 +42,7 @@ class TestJobService:
         sleep_mock_success.assert_called_once()
 
         # --- Scenario 2: immediate timeout on first loop check ---
-        pending2 = Job(id=2, status=JOB_STATUS_RUNNING, ops=[], opstatus=[], opresult=[])
+        pending2 = Job(id=2, status=JOB_STATUS_RUNNING, ops=[], opstatus=[], opresult=[], summary=["Test"])
         get_job_info_mock_timeout = MagicMock(return_value=pending2)
         monkeypatch.setattr(service, "get_job_info", get_job_info_mock_timeout)
 
