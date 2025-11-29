@@ -29,3 +29,22 @@ class TestAsyncJobService:
         assert "instances" in mock_client.request.call_args[0][1]
 
         assert instance_names == ["instance1.example.com", "instance2.example.com", "instance3.example.com"]
+
+    @pytest.mark.asyncio
+    async def test_get_instances(
+        self,
+        instance_service: AsyncInstanceService,
+        mock_client: AsyncMock,
+        mock_response_from_jsonfile: Callable[[str], MagicMock],
+    ) -> None:
+        mock_client.request.return_value = mock_response_from_jsonfile("v2_get_instances_bulk.json")
+
+        instances = await instance_service.get_instances()
+        assert mock_client.request.call_args[0][0] == "GET"
+        assert "instances" in mock_client.request.call_args[0][1]
+
+        # check bulk param is set
+        assert mock_client.request.call_args[1]["params"].get("bulk", None) == 1
+
+        assert instances[0].name == "test.example.com"
+        assert instances[1].name == "test2.example.com"

@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 from client.async_client.async_api_client import AsyncApiClient
 from client.async_client.job_runner import AsyncJobRunner
 from client.models.instance import InstanceInfo, NewInstance
-from client.utils import dataclass_to_dict, dict_to_dataclass
+from client.utils import dataclass_to_dict
 
 
 class AsyncInstanceService:
@@ -17,6 +17,10 @@ class AsyncInstanceService:
     async def get_instance_names(self) -> List[str]:
         instances = await self._api_client.get(self._ENDPOINT)
         return [instance["id"] for instance in instances]
+
+    async def get_instances(self) -> List[InstanceInfo]:
+        instances_raw = await self._api_client.get(self._ENDPOINT, bulk=1)
+        return [InstanceInfo.from_instance_dict(instance) for instance in instances_raw]
 
     async def create_instance(
         self,
@@ -86,9 +90,7 @@ class AsyncInstanceService:
 
     async def get_instance(self, instance_name: str) -> InstanceInfo:
         instance_info_raw = await self._api_client.get(f"{self._ENDPOINT}/{instance_name}")
-        # replace . with _ in keynames e.g. nic.ips -> nic_ips
-        instance_info_raw = {key.replace(".", "_"): value for key, value in instance_info_raw.items()}
-        return dict_to_dataclass(InstanceInfo, instance_info_raw)
+        return InstanceInfo.from_instance_dict(instance_info_raw)
 
     async def get_instance_info(self, instance_name: str, static: bool = False) -> Dict[str, Any]:
         static_value = int(static)

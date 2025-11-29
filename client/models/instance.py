@@ -1,5 +1,7 @@
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any, Dict, Optional
+
+from client.utils import dict_to_dataclass
 
 
 @dataclass
@@ -50,6 +52,13 @@ class InstanceInfo:
     uuid: str
     serial_no: int
     tags: list[str]
+
+    @staticmethod
+    def from_instance_dict(instance_dict_raw: Dict[str, Any]) -> "InstanceInfo":
+        # replace . with _ in keynames e.g. nic.ips -> nic_ips
+        instance_dict_raw = {key.replace(".", "_"): value for key, value in instance_dict_raw.items()}
+
+        return dict_to_dataclass(InstanceInfo, instance_dict_raw)
 
 
 @dataclass
