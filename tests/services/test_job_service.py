@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from client.models.job import JOB_STATUS_RUNNING, JOB_STATUS_SUCCESS, Job
-from client.services.job_service import JobService
+from client.sync_client.services.job_service import JobService
 
 
 def _time_seq(values: list[float]) -> Iterator[float]:
@@ -28,9 +28,9 @@ class TestJobService:
         monkeypatch.setattr(service, "get_job_info", get_job_info_mock_success)
 
         # time: start at 1000.0, then advance slightly (no timeout)
-        monkeypatch.setattr("client.services.job_service.time.time", _time_seq([1000.0, 1001.0]))
+        monkeypatch.setattr("client.sync_client.services.job_service.time.time", _time_seq([1000.0, 1001.0]))
         sleep_mock_success = MagicMock()
-        monkeypatch.setattr("client.services.job_service.time.sleep", sleep_mock_success)
+        monkeypatch.setattr("client.sync_client.services.job_service.time.sleep", sleep_mock_success)
 
         result = service.wait_for_job(job_id=1, timeout=300, poll_interval=5)
 
@@ -49,11 +49,11 @@ class TestJobService:
         timeout = 300
         # start_time, then immediately past the timeout on first loop iteration
         monkeypatch.setattr(
-            "client.services.job_service.time.time",
+            "client.sync_client.services.job_service.time.time",
             _time_seq([2000.0, 2000.0 + timeout + 1.0]),
         )
         sleep_mock_timeout = MagicMock()
-        monkeypatch.setattr("client.services.job_service.time.sleep", sleep_mock_timeout)
+        monkeypatch.setattr("client.sync_client.services.job_service.time.sleep", sleep_mock_timeout)
 
         with pytest.raises(TimeoutError) as exc:
             service.wait_for_job(job_id=2, timeout=timeout, poll_interval=5)

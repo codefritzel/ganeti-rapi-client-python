@@ -13,7 +13,7 @@ from client.exceptions import (
 )
 
 
-class AsyncApiClient:
+class AsyncRAPIClient:
     _ERROR_MAP = {400: BadRequestError, 401: AuthenticationError, 403: AuthorizationError, 404: ResourceNotFoundError}
 
     def __init__(self, rapi_address: str, username: str, password: str, ssl_verify: bool = True, timeout: int = 10):

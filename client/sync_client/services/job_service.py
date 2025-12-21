@@ -1,7 +1,7 @@
 import time
 
-from client.api_client import RAPIClient
 from client.models.job import Job
+from client.sync_client.api_client import RAPIClient
 from client.utils import dict_to_dataclass
 
 

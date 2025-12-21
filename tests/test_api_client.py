@@ -4,7 +4,6 @@ from unittest.mock import MagicMock, patch
 import httpx
 import pytest
 
-from client.api_client import RAPIClient
 from client.exceptions import (
     AuthenticationError,
     AuthorizationError,
@@ -13,6 +12,7 @@ from client.exceptions import (
     ResourceNotFoundError,
     ServerError,
 )
+from client.sync_client.api_client import RAPIClient
 
 
 class TestErrorHandling:

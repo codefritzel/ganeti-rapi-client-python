@@ -3,9 +3,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from client.api_client import RAPIClient
 from client.models.node import Node
-from client.services.node_service import NodeService
+from client.sync_client.api_client import RAPIClient
+from client.sync_client.services.node_service import NodeService
 
 
 @pytest.fixture

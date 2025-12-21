@@ -1,5 +1,5 @@
-from client.api_client import RAPIClient
 from client.models.node import Node
+from client.sync_client.api_client import RAPIClient
 from client.utils import dict_to_dataclass
 
 

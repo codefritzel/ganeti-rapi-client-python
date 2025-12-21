@@ -1,6 +1,6 @@
 from typing import List
 
-from client.async_client.async_api_client import AsyncApiClient
+from client.async_client.async_api_client import AsyncRAPIClient
 from client.models.job import Job
 from client.utils import dict_to_dataclass
 
@@ -8,7 +8,7 @@ from client.utils import dict_to_dataclass
 class AsyncJobService:
     _ENDPOINT = "jobs"
 
-    def __init__(self, api_client: AsyncApiClient) -> None:
+    def __init__(self, api_client: AsyncRAPIClient) -> None:
         self.api_client = api_client
 
     async def get_job_ids(self) -> List[int]:

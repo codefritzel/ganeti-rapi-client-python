@@ -1,8 +1,8 @@
 import typing
 from typing import Any, List
 
-from client.api_client import RAPIClient
 from client.models.instance import InstanceInfo, NewInstance
+from client.sync_client.api_client import RAPIClient
 from client.utils import dataclass_to_dict, dict_to_dataclass
 
 

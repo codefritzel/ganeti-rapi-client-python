@@ -23,10 +23,11 @@ This library focuses on a clean architecture with typing for excellent editor su
   ```
 
 ## Usage
-```python
-from client import GanetiRapiClient
 
-client = GanetiRapiClient(
+```python
+from client import GanetiRAPIClient
+
+client = GanetiRAPIClient(
     "master.example.com:5080",
     "myuser",
     "mypassword",

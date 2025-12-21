@@ -1,7 +1,7 @@
 import typing
 from typing import Any, Dict, List
 
-from client.async_client.async_api_client import AsyncApiClient
+from client.async_client.async_api_client import AsyncRAPIClient
 from client.async_client.job_runner import AsyncJobRunner
 from client.models.instance import InstanceInfo, NewInstance
 from client.utils import dataclass_to_dict
@@ -10,7 +10,7 @@ from client.utils import dataclass_to_dict
 class AsyncInstanceService:
     _ENDPOINT = "instances"
 
-    def __init__(self, api_client: AsyncApiClient, job_runner: AsyncJobRunner) -> None:
+    def __init__(self, api_client: AsyncRAPIClient, job_runner: AsyncJobRunner) -> None:
         self._api_client = api_client
         self._job_runner = job_runner
 

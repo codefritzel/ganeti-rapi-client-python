@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from client.async_client.async_api_client import AsyncApiClient
+from client.async_client.async_api_client import AsyncRAPIClient
 from client.async_client.job_runner import AsyncJobRunner
 from client.async_client.services.async_job_service import AsyncJobService
 from client.models.job import Job
@@ -15,14 +15,14 @@ def mock_client() -> AsyncMock:
 
 
 @pytest.fixture
-def async_api_client(monkeypatch: pytest.MonkeyPatch, mock_client: AsyncMock) -> AsyncApiClient:
-    client = AsyncApiClient("localhost", "username", "password", ssl_verify=False)
+def async_api_client(monkeypatch: pytest.MonkeyPatch, mock_client: AsyncMock) -> AsyncRAPIClient:
+    client = AsyncRAPIClient("localhost", "username", "password", ssl_verify=False)
     monkeypatch.setattr(client, "_client", mock_client)
     return client
 
 
 @pytest.fixture
-def async_job_service(async_api_client: AsyncApiClient) -> AsyncJobService:
+def async_job_service(async_api_client: AsyncRAPIClient) -> AsyncJobService:
     return AsyncJobService(async_api_client)
 
 

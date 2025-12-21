@@ -3,13 +3,13 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from client.async_client.async_api_client import AsyncApiClient
+from client.async_client.async_api_client import AsyncRAPIClient
 from client.async_client.job_runner import AsyncJobRunner
 from client.async_client.services.async_instance_service import AsyncInstanceService
 
 
 @pytest.fixture
-def instance_service(async_api_client: AsyncApiClient, async_job_runner: AsyncJobRunner) -> AsyncInstanceService:
+def instance_service(async_api_client: AsyncRAPIClient, async_job_runner: AsyncJobRunner) -> AsyncInstanceService:
     return AsyncInstanceService(async_api_client, async_job_runner)
 
 
