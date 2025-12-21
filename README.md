@@ -9,6 +9,7 @@ This library focuses on a clean architecture with typing for excellent editor su
 - fully type-annotated API for first-class IDE autocompletion and static analysis (mypy)
 - Modular architecture to keep concerns separated and extensible
 - Minimal runtime dependencies (only `httpx`)
+- Contains a synchronous and asynchronous client
 
 ## Requirements
 
@@ -24,6 +25,7 @@ This library focuses on a clean architecture with typing for excellent editor su
 
 ## Usage
 
+### synchronous client
 ```python
 from client import GanetiRAPIClient
 
@@ -46,4 +48,27 @@ if job_result.status == 'success':
     print("Instance rebooted successfully")
 else:
     print("Instance reboot failed")
+```
+
+### asynchronous client
+```python
+import asyncio
+
+from client import AsyncGanetiRAPIClient
+
+async def main() -> None:
+    client = AsyncGanetiRAPIClient(
+        rapi_address="master.example.com:5080",
+        username="myuser",
+        password="mypassword",
+        ssl_verify=False
+    )
+
+    instance_info = await client.instance_service.get_instance_info("my_instance.example.com")
+
+    print(instance_info)
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
 ```
