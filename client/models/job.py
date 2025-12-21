@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List
 
 JOB_STATUS_QUEUED = "queued"
 JOB_STATUS_WAITING = "waiting"
@@ -29,7 +29,7 @@ class Job:
     ops: List[Dict[str, Any]]
     summary: List[str]
     opstatus: List[Any]
-    opresult: List[Any] = field(default_factory=lambda: [])
+    opresult: List[Any] = field(default_factory=list)
 
     def is_pending(self) -> bool:
         return self.status in JOB_STATUS_PENDING
