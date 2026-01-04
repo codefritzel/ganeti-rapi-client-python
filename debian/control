@@ -1,0 +1,26 @@
+Source: python3-ganeti-rapi-client
+Section: python
+Priority: optional
+Maintainer: codefritzel <codefritzel@spam.org>
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-python,
+ python3-all,
+ python3-build,
+ python3-installer,
+ python3-setuptools,
+ python3-wheel
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+
+Package: python3-ganeti-rapi-client
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, python3-httpx
+Description: Python client library for the Ganeti Remote API (RAPI)
+ A modern, modular, and type-annotated Python client for the Ganeti Remote API.
+ .
+ Features:
+  * Synchronous and asynchronous client support
+  * Fully type-annotated API for IDE autocompletion and static analysis
+  * Modular architecture for extensibility
+  * Minimal runtime dependencies (only httpx)

@@ -1,0 +1,5 @@
+python3-ganeti-rapi-client (0.0.1-1) UNRELEASED; urgency=medium
+
+  * Initial release.
+
+ -- codefritzel <codefritzel@spam.org>  Sun, 04 Jan 2026 11:51:51 +0100
