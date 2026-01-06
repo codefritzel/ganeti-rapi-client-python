@@ -10,6 +10,7 @@ dist/
 .eggs/
 *.egg
 *.whl
+.pybuild/
 
 # Installer logs
 pip-log.txt
