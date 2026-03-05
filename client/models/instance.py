@@ -3,6 +3,17 @@ from typing import Any, Dict, Optional
 
 from client.utils import dict_to_dataclass
 
+# Instance status
+INSTANCE_STATE_RUNNING = "running"
+
+INSTANCE_STATE_ADMIN_DOWN = "ADMIN_down"
+INSTANCE_STATE_ERROR_DOWN = "ERROR_down"
+
+INSTANCE_STATE_DOWN = [
+    INSTANCE_STATE_ADMIN_DOWN,
+    INSTANCE_STATE_ERROR_DOWN,
+]
+
 
 @dataclass
 class BackendParams:
@@ -52,6 +63,12 @@ class InstanceInfo:
     uuid: str
     serial_no: int
     tags: list[str]
+
+    def is_running(self) -> bool:
+        return self.status == INSTANCE_STATE_RUNNING
+
+    def is_stopped(self) -> bool:
+        return self.status in INSTANCE_STATE_DOWN
 
     @staticmethod
     def from_instance_dict(instance_dict_raw: Dict[str, Any]) -> "InstanceInfo":
