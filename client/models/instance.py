@@ -27,6 +27,33 @@ class BackendParams:
 
 
 @dataclass
+class NetworkInfo:
+    name: str
+    uuid: str
+
+
+@dataclass
+class InstanceNic:
+    name: str
+    uuid: str
+    ip: str
+    mac: str
+    mode: str
+    link: str
+    bridge: str
+    #    vlan: str
+    network: NetworkInfo
+
+
+@dataclass
+class InstanceDisk:
+    name: str
+    uuid: str
+    size: int
+    spindle: bool
+
+
+@dataclass
 class InstanceInfo:
     name: str
     admin_state: str
@@ -34,20 +61,9 @@ class InstanceInfo:
     pnode: str
     snodes: list[str]
     disk_template: str
-    nic_ips: list[str]
-    nic_macs: list[str]
-    nic_modes: list[str]
-    nic_uuids: list[str]
-    nic_names: list[Optional[str]]
-    nic_links: list[str]
-    nic_networks: list[str]
-    nic_networks_names: list[str]
-    nic_bridges: list[str]
+    nics: list[InstanceNic]
     network_port: int
-    disk_sizes: list[int]
-    disk_spindles: list[Any]
-    disk_uuids: list[str]
-    disk_names: list[Optional[str]]
+    disks: list[InstanceDisk]
     disk_usage: int
     beparams: BackendParams
     hvparams: dict[str, Any]
@@ -72,8 +88,30 @@ class InstanceInfo:
 
     @staticmethod
     def from_instance_dict(instance_dict_raw: Dict[str, Any]) -> "InstanceInfo":
-        # replace . with _ in keynames e.g. nic.ips -> nic_ips
-        instance_dict_raw = {key.replace(".", "_"): value for key, value in instance_dict_raw.items()}
+        nics: list[Dict[str, Any]] = []
+        disks: list[Dict[str, Any]] = []
+        for key, value in instance_dict_raw.items():
+            if key.startswith("nic.") and key.endswith("s"):
+                new_key = key.replace("nic.", "")[:-1]  # nic.ips -> ip
+                for idx, item in enumerate(value):
+                    if len(nics) <= idx:
+                        nics.append({})
+                    nics[idx][new_key] = item
+
+            if key.startswith("disk."):
+                new_key = key.replace("disk.", "")[:-1]  # disk.sizes -> size
+                for idx, item in enumerate(value):
+                    if len(disks) <= idx:
+                        disks.append({})
+                    disks[idx][new_key] = item
+
+        # remove the old nic. and disk. keys
+        for key in list(instance_dict_raw.keys()):
+            if key.startswith(("disk.", "nic.")):
+                del instance_dict_raw[key]
+
+        instance_dict_raw["disks"] = disks
+        instance_dict_raw["nics"] = nics
 
         return dict_to_dataclass(InstanceInfo, instance_dict_raw)
 

@@ -148,4 +148,4 @@ class TestInstanceService:
 
         assert isinstance(instance, InstanceInfo)
         assert instance.name == "test.example.com"
-        assert "192.168.1.100" in instance.nic_ips
+        assert instance.nics[0].ip == "192.168.1.100"

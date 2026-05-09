@@ -3,7 +3,7 @@ from typing import Any, List
 
 from client.models.instance import InstanceInfo, NewInstance
 from client.sync_client.api_client import RAPIClient
-from client.utils import dataclass_to_dict, dict_to_dataclass
+from client.utils import dataclass_to_dict
 
 
 class InstanceService:
@@ -71,9 +71,7 @@ class InstanceService:
 
     def get_instance(self, instance_name: str) -> InstanceInfo:
         instance_info_raw = self.api_client.get(f"{self.ENDPOINT}/{instance_name}")
-        # replace . with _ in keynames e.g. nic.ips -> nic_ips
-        instance_info_raw = {key.replace(".", "_"): value for key, value in instance_info_raw.items()}
-        return dict_to_dataclass(InstanceInfo, instance_info_raw)
+        return InstanceInfo.from_instance_dict(instance_info_raw)
 
     def get_instance_info(self, instance_name: str, static: bool = False) -> int:
         static_value = int(static)  # RAPI bool is 0 or 1 not 'true' or 'false'
