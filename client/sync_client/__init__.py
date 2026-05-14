@@ -1,6 +1,7 @@
 from client.sync_client.api_client import RAPIClient
 from client.sync_client.services.instance_service import InstanceService
 from client.sync_client.services.job_service import JobService
+from client.sync_client.services.network_service import NetworkService
 from client.sync_client.services.node_service import NodeService
 
 
@@ -10,3 +11,4 @@ class GanetiRAPIClient:
         self.instance_service = InstanceService(self._client)
         self.job_service = JobService(self._client)
         self.node_service = NodeService(self._client)
+        self.network_service = NetworkService(self._client)
