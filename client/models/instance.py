@@ -118,7 +118,7 @@ class InstanceInfo:
 
 @dataclass
 class NewInstance:
-    name: str
+    instance_name: str
     disk_template: str
     disks: list[dict[str, str]]
     nics: list[dict[str, Any]]
