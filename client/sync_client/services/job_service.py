@@ -2,7 +2,6 @@ import time
 
 from client.models.job import Job
 from client.sync_client.api_client import RAPIClient
-from client.utils import dict_to_dataclass
 
 
 class JobService:
@@ -11,13 +10,17 @@ class JobService:
     def __init__(self, api_client: RAPIClient):
         self.api_client = api_client
 
-    def get_jobs(self) -> list[int]:
+    def get_job_ids(self) -> list[int]:
         jobs_raw = self.api_client.get(self.ENDPOINT)
         return [job["id"] for job in jobs_raw]
 
+    def get_jobs(self) -> list[Job]:
+        jobs_raw = self.api_client.get(self.ENDPOINT, bulk=1)
+        return [Job.from_job_dict(job) for job in jobs_raw]
+
     def get_job_info(self, job_id: int) -> Job:
         job_raw = self.api_client.get(f"{self.ENDPOINT}/{job_id}")
-        return dict_to_dataclass(Job, job_raw)
+        return Job.from_job_dict(job_raw)
 
     def cancel_job(self, job_id: int) -> None:
         self.api_client.delete(f"{self.ENDPOINT}/{job_id}")

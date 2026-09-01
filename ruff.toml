@@ -36,6 +36,7 @@ ignore = [
 "tests/*" = ["PT", "S101"]  # Allow assert in tests
 
 [format]
+exclude = ["README.md"]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
