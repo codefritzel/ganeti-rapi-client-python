@@ -22,7 +22,7 @@ class AsyncInstanceService:
         instances_raw = await self._api_client.get(self._ENDPOINT, bulk=1)
         return [InstanceInfo.from_instance_dict(instance) for instance in instances_raw]
 
-    async def create_instance(
+    async def create_instance_wait(
         self,
         new_instance: NewInstance,
         ip_check: bool = False,
@@ -48,42 +48,42 @@ class AsyncInstanceService:
             )
         )
 
-    async def modify_instance(self, instance_name: str, **kwargs: Any) -> None:
+    async def modify_instance_wait(self, instance_name: str, **kwargs: Any) -> None:
         await self._job_runner.run_and_wait_for_success(
             lambda: self._api_client.put(f"{self._ENDPOINT}/{instance_name}/modify", **kwargs)
         )
 
-    async def delete_instance(self, instance_name: str) -> None:
+    async def delete_instance_wait(self, instance_name: str) -> None:
         await self._job_runner.run_and_wait_for_success(
             lambda: self._api_client.delete(f"{self._ENDPOINT}/{instance_name}")
         )
 
-    async def start_instance(self, instance_name: str) -> None:
+    async def start_instance_wait(self, instance_name: str) -> None:
         await self._job_runner.run_and_wait_for_success(
             lambda: self._api_client.put(f"{self._ENDPOINT}/{instance_name}/startup")
         )
 
-    async def stop_instance(self, instance_name: str) -> None:
+    async def stop_instance_wait(self, instance_name: str) -> None:
         await self._job_runner.run_and_wait_for_success(
             lambda: self._api_client.put(f"{self._ENDPOINT}/{instance_name}/shutdown")
         )
 
-    async def restart_instance(self, instance_name: str) -> None:
+    async def restart_instance_wait(self, instance_name: str) -> None:
         await self._job_runner.run_and_wait_for_success(
             lambda: self._api_client.post(f"{self._ENDPOINT}/{instance_name}/reboot")
         )
 
-    async def migrate_instance(self, instance_name: str) -> None:
+    async def migrate_instance_wait(self, instance_name: str) -> None:
         await self._job_runner.run_and_wait_for_success(
             lambda: self._api_client.put(f"{self._ENDPOINT}/{instance_name}/migrate")
         )
 
-    async def failover_instance(self, instance_name: str) -> None:
+    async def failover_instance_wait(self, instance_name: str) -> None:
         await self._job_runner.run_and_wait_for_success(
             lambda: self._api_client.put(f"{self._ENDPOINT}/{instance_name}/failover")
         )
 
-    async def grow_instance_disk(self, instance_name: str, disk_index: int, amount: int) -> None:
+    async def grow_instance_disk_wait(self, instance_name: str, disk_index: int, amount: int) -> None:
         await self._job_runner.run_and_wait_for_success(
             lambda: self._api_client.post(f"{self._ENDPOINT}/{instance_name}/disk/{disk_index}/grow", amount=amount)
         )
