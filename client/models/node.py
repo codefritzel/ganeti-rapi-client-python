@@ -29,10 +29,12 @@ class Node:
     master_capable: bool
     vm_capable: bool
     ndparams: Dict[str, Any]
-    group_uuid: str
     ctime: float
+    group_uuid: str
     mtime: float
     uuid: str
     serial_no: int
     tags: list[str]
-    secondary_ip: str
+
+    def is_master(self) -> bool:
+        return self.role == "M"

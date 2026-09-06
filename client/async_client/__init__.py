@@ -2,6 +2,7 @@ from client.async_client.async_api_client import AsyncRAPIClient
 from client.async_client.job_runner import AsyncJobRunner
 from client.async_client.services.async_instance_service import AsyncInstanceService
 from client.async_client.services.async_job_service import AsyncJobService
+from client.async_client.services.async_node_service import AsyncNodeService
 
 
 class AsyncGanetiRAPIClient:
@@ -13,3 +14,4 @@ class AsyncGanetiRAPIClient:
         self._job_runner = AsyncJobRunner(self.job_service)
 
         self.instance_service = AsyncInstanceService(self._client, self._job_runner)
+        self.node_service = AsyncNodeService(self._client)
